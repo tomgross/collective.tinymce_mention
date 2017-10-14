@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<registry>
+	<record name="plone.custom_plugins"
+        interface="Products.CMFPlone.interfaces.controlpanel.ITinyMCESchema"
+        field="custom_plugins">
+  <field type="plone.registry.field.List">
+    <value_type type="plone.registry.field.TextLine" />
+  </field>
+  <value>
+    <element>mention|++plone++collective.tinymce_mention/mention/plugin.js</element>
+  </value>
+</record>
+
+</registry>
