@@ -6,9 +6,26 @@
   <field type="plone.registry.field.List">
     <value_type type="plone.registry.field.TextLine" />
   </field>
-  <value>
+  <value purge="False">
     <element>mention|++plone++collective.tinymce_mention/mention/plugin.js</element>
   </value>
 </record>
+   <record name="plone.other_settings" interface="Products.CMFPlone.interfaces.controlpanel.ITinyMCESchema" field="other_settings">
+    <field type="plone.registry.field.Text"></field>
+    <value>{&#13;
+  "mentions": {&#13;
+    "source": null,&#13;
+    "delimiter": "$"&#13;
+  }&#13;
+}</value>
+  </record>
+  <record name="plone.content_css" interface="Products.CMFPlone.interfaces.controlpanel.ITinyMCESchema" field="content_css">
+    <field type="plone.registry.field.List">
+    </field>
+    <value purge="False">
+      <element>++plone++collective.tinymce_mention/css/autocomplete.css</element>
+    </value>
+  </record>
+
 
 </registry>
