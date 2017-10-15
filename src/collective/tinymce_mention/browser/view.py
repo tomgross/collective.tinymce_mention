@@ -13,11 +13,9 @@ class GetJsonSchemaView(BrowserView):
     ]
 
     def __call__(self):
-        self.request.response.setHeader("Content-Type", 'application/json')
-        serializer=getMultiAdapter(
-                (self.context, self.request),
-                ISerializeToJson
-            )
+        self.request.response.setHeader('Content-Type', 'application/json')
+        serializer = getMultiAdapter(
+            (self.context, self.request), ISerializeToJson)
         json_context = [
             {'name': name, 'value': value}
             for name, value in serializer().items()
