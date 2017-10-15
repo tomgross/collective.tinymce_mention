@@ -21,7 +21,7 @@ setup(
     classifiers=[
         "Environment :: Web Environment",
         "Framework :: Plone",
-        "Framework :: Plone :: 5.1rc2",
+        "Framework :: Plone :: 5.1",
         "Programming Language :: Python",
         "Programming Language :: Python :: 2.7",
         "Operating System :: OS Independent",
@@ -40,6 +40,7 @@ setup(
     install_requires=[
         # -*- Extra requirements: -*-
         'plone.api',
+        'plone.restapi',
         'Products.GenericSetup>=1.8.2',
         'setuptools',
         'z3c.jbot',

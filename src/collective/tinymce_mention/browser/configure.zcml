@@ -18,4 +18,11 @@
       directory="static"
       />
 
+  <browser:page
+     name="get_json_schema"
+     for="*"
+     permission="zope2.View"
+     class=".view.GetJsonSchemaView"
+     />
+
 </configure>

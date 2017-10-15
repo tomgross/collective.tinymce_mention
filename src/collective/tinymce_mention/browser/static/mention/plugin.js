@@ -12,6 +12,7 @@
         }, options);
 
         this.options.insertFrom = this.options.insertFrom || this.options.queryBy;
+        this.options.source = this.options.source || this.default_source;
 
         this.matcher = this.options.matcher || this.matcher;
         this.sorter = this.options.sorter || this.sorter;
@@ -245,13 +246,26 @@
             }
         },
 
+        default_source: function (query, process, delimiter) {
+	        // Do your ajax call
+	        // When using multiple delimiters you can alter the query depending on the delimiter used
+	        if (delimiter === '$') {
+	          var call_url = $('body').attr('data-view-url') + "/@@get_json_schema";
+		        $.getJSON(call_url, function(data) {
+                process(data);
+              }
+            );
+	        }
+	      },
+
+
         renderDropdown: function () {
             return '<ul class="rte-autocomplete dropdown-menu"><li class="loading"></li></ul>';
         },
 
         render: function (item, index) {
             return '<li>' +
-                        '<a href="javascript:;"><span>' + item[this.options.queryBy] + '</span></a>' +
+                        '<a href="javascript:;"><span>' + item[this.options.queryBy] + '=(' + item['value']  + ')</span></a>' +
                     '</li>';
         },
 
@@ -287,7 +301,7 @@
         },
 
         insert: function (item) {
-            return '<span>' + item[this.options.insertFrom] + '</span>&nbsp;';
+            return '${' + item[this.options.insertFrom] + '}';
         },
 
         cleanUp: function (rollback) {
@@ -306,7 +320,7 @@
                 if (!$selection.length) {
                     return;
                 }
-                    
+
                 var replacement = $('<p>' + this.options.delimiter + text + '</p>')[0].firstChild,
                     focus = $(this.editor.selection.getNode()).offset().top === ($selection.offset().top + (($selection.outerHeight() - $selection.height()) / 2));
 
@@ -383,4 +397,4 @@
     });
 
     tinymce.PluginManager.add('mention', tinymce.plugins.Mention);
-  
+
