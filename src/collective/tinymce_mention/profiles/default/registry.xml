@@ -1,31 +1,18 @@
 <?xml version="1.0"?>
 <registry>
-	<record name="plone.custom_plugins"
-        interface="Products.CMFPlone.interfaces.controlpanel.ITinyMCESchema"
-        field="custom_plugins">
-  <field type="plone.registry.field.List">
-    <value_type type="plone.registry.field.TextLine" />
-  </field>
-  <value purge="False">
-    <element>mention|++plone++collective.tinymce_mention/mention/plugin.js</element>
-  </value>
-</record>
-   <record name="plone.other_settings" interface="Products.CMFPlone.interfaces.controlpanel.ITinyMCESchema" field="other_settings">
-    <field type="plone.registry.field.Text"></field>
-    <value>{&#13;
+  <records interface="Products.CMFPlone.interfaces.ITinyMCESchema" prefix="plone">
+    <value purge="False" key="custom_plugins">
+      <element>mention|++plone++collective.tinymce_mention/mention/plugin.js</element>
+    </value>
+    <value key="other_settings">{&#13;
   "mentions": {&#13;
     "source": null,&#13;
     "delimiter": "$"&#13;
   }&#13;
-}</value>
-  </record>
-  <record name="plone.content_css" interface="Products.CMFPlone.interfaces.controlpanel.ITinyMCESchema" field="content_css">
-    <field type="plone.registry.field.List">
-    </field>
-    <value purge="False">
-      <element>++plone++collective.tinymce_mention/css/autocomplete.css</element>
-    </value>
-  </record>
-
-
+}
+   </value>
+   <value key="content_css" purge="False">
+     <element>++plone++collective.tinymce_mention/css/autocomplete.css</element>
+   </value>
+  </records>
 </registry>
