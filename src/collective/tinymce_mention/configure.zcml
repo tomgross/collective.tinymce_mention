@@ -42,5 +42,27 @@
       name="collective.tinymce_mention-hiddenprofiles" />
 
   <!-- -*- extra stuff goes here -*- -->
+  <adapter
+    provides="plone.outputfilters.interfaces.IFilter"
+    name="placeholder_replacer"
+    for="* *"
+    factory=".filter.PlaceHolderReplacer"
+    />
+
+  <adapter
+    factory=".filter.DateTimeSerializer"
+    />
+
+  <adapter
+    factory=".filter.TextSerializer"
+    />
+
+  <adapter
+    factory=".filter.ListSerializer"
+    />
+
+  <adapter
+    factory=".filter.TupleSerializer"
+    />
 
 </configure>

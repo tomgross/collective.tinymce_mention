@@ -9,7 +9,8 @@ import json
 class GetJsonSchemaView(BrowserView):
 
     ignore = [
-        '@components', 'parent', 'text', 'relatedItems', 'version'
+        '@components', 'parent', 'text', 'relatedItems', 'version',
+        'UID', 'layout'
     ]
 
     def __call__(self):
