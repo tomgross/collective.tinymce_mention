@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+from collective.tinymce_mention.interfaces import ICollectiveTinymceMentionLayer  # noqa
+from collective.tinymce_mention.interfaces import ISimpleSerializer
 from plone import api
 from plone.app.textfield.interfaces import IRichText
 from plone.autoform.interfaces import READ_PERMISSIONS_KEY
@@ -7,14 +9,11 @@ from plone.outputfilters.interfaces import IFilter
 from plone.supermodel.utils import mergedTaggedValueDict
 from zope.component import adapter
 from zope.globalrequest import getRequest
-from zope.interface import Interface
 from zope.interface import implementer
 from zope.interface import implementer_only
-from zope.schema import getFields
+from zope.interface import Interface
 from zope.schema import interfaces as schema_interfaces
-
-from collective.tinymce_mention.interfaces import ICollectiveTinymceMentionLayer
-from collective.tinymce_mention.interfaces import ISimpleSerializer
+from zope.schema import getFields
 
 import re
 
@@ -55,8 +54,6 @@ class DollarVarReplacer(dict):
             return self.not_found
 
 
-
-
 @implementer_only(ISimpleSerializer)
 @adapter(Interface)
 class TextSerializer(object):
@@ -80,6 +77,7 @@ class DateTimeSerializer(TextSerializer):
         plone_view = api.content.get_view(
             name='plone', context=context, request=request)
         return plone_view.toLocalizedTime(value(), long_format=True)
+
 
 @adapter(schema_interfaces.IList)
 class ListSerializer(TextSerializer):
@@ -128,11 +126,11 @@ class PlaceHolderReplacer(object):
                 if IRichText.providedBy(field):
                     continue
 
-                if not self.check_permission(read_permissions.get(name), self.context):
+                if not self.check_permission(
+                        read_permissions.get(name), self.context):
                     continue
 
                 values[name] = ISimpleSerializer(field)(self.context)
 
-        print(values)
         dr = DollarVarReplacer(values)
         return dr.sub(data)

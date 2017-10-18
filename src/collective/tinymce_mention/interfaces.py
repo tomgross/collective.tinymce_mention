@@ -7,5 +7,6 @@ from zope.publisher.interfaces.browser import IDefaultBrowserLayer
 class ICollectiveTinymceMentionLayer(IDefaultBrowserLayer):
     """Marker interface that defines a browser layer."""
 
+
 class ISimpleSerializer(Interface):
     """"""
