@@ -7,6 +7,8 @@ from plone.autoform.interfaces import READ_PERMISSIONS_KEY
 from plone.dexterity.utils import iterSchemata
 from plone.outputfilters.interfaces import IFilter
 from plone.supermodel.utils import mergedTaggedValueDict
+from plone.outputfilters.browser.resolveuid import uuidToURL
+from z3c.relationfield.interfaces import IRelationValue
 from zope.component import adapter
 from zope.globalrequest import getRequest
 from zope.interface import implementer
@@ -14,6 +16,7 @@ from zope.interface import implementer_only
 from zope.interface import Interface
 from zope.schema import interfaces as schema_interfaces
 from zope.schema import getFields
+
 
 import re
 
@@ -85,12 +88,24 @@ class ListSerializer(TextSerializer):
 
     def __call__(self, context):
         value = super(ListSerializer, self).__call__(context)
-        return u', '.join([x for x in value])
+        return u', '.join([ISimpleSerializer(x) for x in value])
 
 
 @adapter(schema_interfaces.ITuple)
 class TupleSerializer(ListSerializer):
     """ Serializer for tuples """
+
+
+@adapter(IRelationValue)
+class RelationValueSerializer(TextSerializer):
+    """ Serializer for related values """
+
+    def __call__(self, context):
+        value = self.field.get(context)
+        print value
+        if not value:
+            return ''
+        return uuidToURL(value)
 
 
 @implementer(IFilter)
