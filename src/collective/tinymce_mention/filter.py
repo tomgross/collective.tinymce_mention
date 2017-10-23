@@ -97,6 +97,9 @@ class ListSerializer(TextSerializer):
                 serialized.append(uuidToURL(item))
             elif isinstance(item, basestring):
                 serialized.append(safe_unicode(item))
+            elif isinstance(item, dict):
+                # probably a query string. what should we do with it?
+                pass
             else:
                 log.warn("Can't serialize {0}".format(item))
         return u', '.join(serialized)

@@ -10,7 +10,8 @@ class GetJsonSchemaView(BrowserView):
 
     ignore = [
         '@components', 'parent', 'text', 'relatedItems', 'version',
-        'UID', 'layout'
+        'UID', 'layout',
+        'content', 'customContentLayout'   # Mosaic fields
     ]
 
     def __call__(self):
