@@ -8,6 +8,7 @@ from plone.dexterity.utils import iterSchemata
 from plone.outputfilters.browser.resolveuid import uuidToURL
 from plone.outputfilters.interfaces import IFilter
 from plone.supermodel.utils import mergedTaggedValueDict
+from Products.CMFPlone.utils import safe_unicode
 from z3c.relationfield.interfaces import IRelationValue
 from zope.component import adapter
 from zope.globalrequest import getRequest
@@ -87,7 +88,7 @@ class ListSerializer(TextSerializer):
 
     def __call__(self, context):
         value = super(ListSerializer, self).__call__(context)
-        return u', '.join([ISimpleSerializer(x) for x in value])
+        return u', '.join([safe_unicode(x) for x in value])
 
 
 @adapter(schema_interfaces.ITuple)
