@@ -18,7 +18,10 @@ from zope.interface import Interface
 from zope.schema import interfaces as schema_interfaces
 from zope.schema import getFields
 
+import logging
 import re
+
+log = logging.getLogger(__name__)
 
 
 class DollarVarReplacer(dict):
@@ -79,7 +82,7 @@ class DateTimeSerializer(TextSerializer):
         request = getRequest()
         plone_view = api.content.get_view(
             name='plone', context=context, request=request)
-        return plone_view.toLocalizedTime(value(), long_format=True)
+        return plone_view.toLocalizedTime(value, long_format=True)
 
 
 @adapter(schema_interfaces.IList)
@@ -88,7 +91,15 @@ class ListSerializer(TextSerializer):
 
     def __call__(self, context):
         value = super(ListSerializer, self).__call__(context)
-        return u', '.join([safe_unicode(x) for x in value])
+        serialized = []
+        for item in value:
+            if IRelationValue.providedBy(item):
+                serialized.append(uuidToURL(item))
+            elif isinstance(item, basestring):
+                serialized.append(safe_unicode(item))
+            else:
+                log.warn("Can't serialize {0}".format(item))
+        return u', '.join(serialized)
 
 
 @adapter(schema_interfaces.ITuple)
