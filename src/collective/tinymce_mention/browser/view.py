@@ -9,9 +9,11 @@ import json
 class GetJsonSchemaView(BrowserView):
 
     ignore = [
-        '@components', 'parent', 'text', 'relatedItems', 'version',
-        'UID', 'layout',
-        'content', 'customContentLayout'   # Mosaic fields
+        '@components', '@id', '@type',   # plone.restapi fields
+        'parent', 'text', 'relatedItems', 'version',
+        'UID', 'layout', 'image', 'query',
+        'content', 'customContentLayout',
+        'pageSiteLayout', 'contentLayout'    # Mosaic fields
     ]
 
     def __call__(self):
@@ -19,7 +21,7 @@ class GetJsonSchemaView(BrowserView):
         serializer = getMultiAdapter(
             (self.context, self.request), ISerializeToJson)
         json_context = [
-            {'name': name, 'value': value}
+            {'name': name, 'value': value if value else u''}
             for name, value in serializer().items()
             if name not in self.ignore
         ]
